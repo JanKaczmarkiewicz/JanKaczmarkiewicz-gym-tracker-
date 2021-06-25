@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "App",
+      "group": "build",
+      "type": "npm",
+      "script": "app:develop",
+      "presentation": {
+        "group": "Application"
+      }
+    },
+    {
+      "label": "Backend",
+      "group": "build",
+      "type": "npm",
+      "script": "backend:develop",
+      "presentation": {
+        "group": "Application"
+      }
+    },
+    {
+      "label": "Develop",
+      "group": "build",
+      "dependsOn": ["App", "Backend"],
+      "problemMatcher": []
+    }
+  ]
+}
