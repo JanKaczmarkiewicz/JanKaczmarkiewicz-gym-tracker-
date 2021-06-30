@@ -1,52 +1,17 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { ActivityIndicator } from "react-native";
-import styled from "styled-components/native";
-import colors from "../colors";
-import { RootStackParamList } from "../App";
+import { RootStackParamList } from "../../App";
 import { StackNavigationProp } from "@react-navigation/stack";
-import useTrackerQuery, { AdaptedTracker } from "../queries/useTrackedQuery";
-
-const Container = styled.View`
-  flex: 1;
-  background-color: ${colors.black};
-  padding: 32px 12px;
-`;
-
-const MonthTitle = styled.Text`
-  font-size: 36px;
-  color: ${colors.white};
-`;
-
-const DayButton = styled.TouchableOpacity`
-  width: 80px;
-  height: 80px;
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.darkGray};
-  border-radius: 20px;
-  margin-right: 16px;
-  margin-bottom: 16px;
-`;
-
-const AddDayButton = styled(DayButton)`
-  background-color: ${colors.white};
-`;
-
-const DaysContainer = styled.View`
-  padding: 16px 0;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-`;
-
-const DayButtonContentText = styled.Text`
-  color: ${colors.white};
-  font-size: 36px;
-`;
-
-const AddDayButtonContentText = styled(DayButtonContentText)`
-  color: ${colors.black};
-`;
+import useTrackerQuery, { AdaptedTracker } from "../../queries/useTrackedQuery";
+import {
+  Container,
+  AddDayButton,
+  AddDayButtonContentText,
+  MonthTitle,
+  DaysContainer,
+  DayButton,
+  DayButtonContentText,
+} from "./styled";
 
 const TODAY = new Date();
 
@@ -74,7 +39,6 @@ const groupWorkoutsByMonth = (tracker: AdaptedTracker) => {
   ];
 
   for (const workout of tracker.workouts) {
-    const day = workout.date.getDate();
     const month = workout.date.getMonth();
     monthList[month].workouts.push(workout);
   }
@@ -93,7 +57,7 @@ const MainView = ({ navigation }: Props) => {
     <Container>
       {monthList.map((month, monthIndex) => {
         if (!month.workouts.length) return null;
-
+        //TODO: refactor this lines
         const isTodayCreated = month.workouts.find(
           ({ date }) => TODAY.getDate() === date.getDate()
         );
@@ -102,13 +66,18 @@ const MainView = ({ navigation }: Props) => {
 
         const addDayButton =
           !isTodayCreated && isCurrentMonth ? (
-            <AddDayButton key="+" onPress={() => {}}>
+            <AddDayButton
+              key="+"
+              onPress={() => {
+                //create day & navigate to it
+              }}
+            >
               <AddDayButtonContentText>+</AddDayButtonContentText>
             </AddDayButton>
           ) : null;
 
         return (
-          <>
+          <Fragment key={month.name}>
             <MonthTitle>{month.name}</MonthTitle>
             <DaysContainer>
               {addDayButton}
@@ -123,7 +92,7 @@ const MainView = ({ navigation }: Props) => {
                 </DayButton>
               ))}
             </DaysContainer>
-          </>
+          </Fragment>
         );
       })}
     </Container>

@@ -1,8 +1,8 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import MainView from "./Screens/MainView";
-import Workout from "./Screens/Workout";
+import MainView from "./screens/MainView/MainView";
+import Workout from "./screens/Workout";
 import { AdaptedTracker } from "./queries/useTrackedQuery";
 
 export type RootStackParamList = {
