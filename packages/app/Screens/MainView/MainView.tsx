@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
-import { ActivityIndicator } from "react-native";
 import { RootStackParamList } from "../../App";
 import { StackNavigationProp } from "@react-navigation/stack";
-import useTrackerQuery, { AdaptedTracker } from "../../queries/useTrackedQuery";
 import {
   Container,
   AddDayButton,
@@ -12,6 +10,7 @@ import {
   DayButton,
   DayButtonContentText,
 } from "./styled";
+import { AdaptedTracker, useTrackerContext } from "../../prividers/Tracker";
 
 const TODAY = new Date();
 
@@ -47,11 +46,9 @@ const groupWorkoutsByMonth = (tracker: AdaptedTracker) => {
 };
 
 const MainView = ({ navigation }: Props) => {
-  const result = useTrackerQuery("1");
+  const { tracker, addWorkout } = useTrackerContext();
 
-  if (result.isLoading) return <ActivityIndicator />;
-
-  const monthList = groupWorkoutsByMonth(result.data);
+  const monthList = groupWorkoutsByMonth(tracker);
 
   return (
     <Container>
@@ -69,7 +66,8 @@ const MainView = ({ navigation }: Props) => {
             <AddDayButton
               key="+"
               onPress={() => {
-                //create day & navigate to it
+                addWorkout({ date: TODAY });
+                navigation.push("Workout", { workoutIndex: 0 });
               }}
             >
               <AddDayButtonContentText>+</AddDayButtonContentText>
@@ -81,10 +79,10 @@ const MainView = ({ navigation }: Props) => {
             <MonthTitle>{month.name}</MonthTitle>
             <DaysContainer>
               {addDayButton}
-              {month.workouts.map((workout) => (
+              {month.workouts.map((workout, workoutIndex) => (
                 <DayButton
                   key={workout.date.getDate()}
-                  onPress={() => navigation.push("Workout", workout)}
+                  onPress={() => navigation.push("Workout", { workoutIndex })}
                 >
                   <DayButtonContentText>
                     {workout.date.getDate()}

@@ -5,6 +5,7 @@ import { Container } from "./MainView/styled";
 import styled from "styled-components/native";
 import colors from "../colors";
 import { Bar as ProgressBar } from "react-native-progress";
+import { useTrackerContext } from "../prividers/Tracker";
 
 type Props = {
   route: RouteProp<RootStackParamList, "Workout">;
@@ -47,17 +48,22 @@ const ProgressBarWrapper = styled.View`
   margin-bottom: 24px;
 `;
 
-const Workout = ({ route: { params: workout } }: Props) => {
-  const [state, setState] = useState(workout);
+const Workout = ({
+  route: {
+    params: { workoutIndex },
+  },
+}: Props) => {
+  const { tracker, updateIsCompleted } = useTrackerContext();
+  const workout = tracker.workouts[workoutIndex];
 
   return (
     <Container>
-      {state.exercises.map(({ set, name }, exerciseIndex) => {
+      {workout.exercises.map(({ set, name }, exerciseIndex) => {
         const progress =
           set.filter(({ isCompleted }) => isCompleted).length / set.length;
 
         return (
-          <ExerciseContainer isCompleted={progress === 1}>
+          <ExerciseContainer key={name} isCompleted={progress === 1}>
             <ExerciseTitle>{name}</ExerciseTitle>
             <ProgressBarWrapper>
               <ProgressBar
@@ -67,33 +73,22 @@ const Workout = ({ route: { params: workout } }: Props) => {
               />
             </ProgressBarWrapper>
             <SetsContainer>
-              {set.map(
-                ({ isCompleted, repetitions, weight }, setIndexOuter) => (
-                  <SetWrapper
-                    onPress={() => {
-                      setState({
-                        ...state,
-                        exercises: state.exercises.map((exercise, index) =>
-                          index === exerciseIndex
-                            ? {
-                                ...exercise,
-                                set: exercise.set.map((set, setIndexInner) =>
-                                  setIndexInner === setIndexOuter
-                                    ? { ...set, isCompleted: !isCompleted }
-                                    : set
-                                ),
-                              }
-                            : exercise
-                        ),
-                      });
-                    }}
-                  >
-                    <SetText isCompleted={isCompleted}>
-                      {weight} ✕ {repetitions}
-                    </SetText>
-                  </SetWrapper>
-                )
-              )}
+              {set.map(({ isCompleted, repetitions, weight }, setIndex) => (
+                <SetWrapper
+                  onPress={() => {
+                    updateIsCompleted({
+                      setIndex,
+                      exerciseIndex,
+                      workoutIndex,
+                      isCompleted: !isCompleted,
+                    });
+                  }}
+                >
+                  <SetText isCompleted={isCompleted}>
+                    {weight} ✕ {repetitions}
+                  </SetText>
+                </SetWrapper>
+              ))}
             </SetsContainer>
           </ExerciseContainer>
         );

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { Serialize } from "../types";
 const tracker = Router();
 
-const data = {
+let data = {
   id: "1",
   workouts: [
     {
@@ -45,8 +45,13 @@ const data = {
 };
 
 export type Tracker = Serialize<typeof data>;
+// TODO: use data base
+tracker.get("/tracker", (req, res) => {
+  res.status(200).json(data);
+});
 
-tracker.get("/tracker/:id", (req, res) => {
+tracker.patch("/tracker", (req, res) => {
+  data = req.body;
   res.status(200).json(data);
 });
 
