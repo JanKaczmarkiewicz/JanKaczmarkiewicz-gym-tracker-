@@ -6,8 +6,8 @@
   ],
   "scripts": {
     "app:develop": "cd packages/app/ && yarn start",
-    "backend:develop": "cd packages/backend/ && yarn start",
+    "backend:develop": "cd packages/backend/ && yarn develop",
     "build": "cd packages/backend/ && yarn build",
-    "postbuild": "cd packages/backend/ && yarn start"
+    "start": "cd packages/backend/ && yarn start"
   }
 }
