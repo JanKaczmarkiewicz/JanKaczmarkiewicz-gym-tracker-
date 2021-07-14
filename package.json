@@ -5,9 +5,8 @@
     "packages/*"
   ],
   "scripts": {
+    "heroku-postbuild": "yarn workspaces run build",
     "app:develop": "cd packages/app/ && yarn start",
-    "backend:develop": "cd packages/backend/ && yarn develop",
-    "prestart": "cd packages/backend/ && yarn build",
-    "start": "node packages/backend/dist/"
+    "backend:develop": "cd packages/backend/ && yarn develop"
   }
 }
