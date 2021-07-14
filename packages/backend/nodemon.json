@@ -1,5 +1,8 @@
 {
   "watch": ["*"],
   "ext": "ts,json",
-  "exec": "ts-node index.ts"
+  "exec": "ts-node index.ts",
+  "env": {
+    "NODE_ENV": "development"
+  }
 }

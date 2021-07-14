@@ -2,7 +2,8 @@
   "name": "@gym-tracker/backend",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon --config nodemon.json"
+    "start": "nodemon --config nodemon.json",
+    "build": "tsc"
   },
   "dependencies": {
     "dotenv": "^10.0.0",

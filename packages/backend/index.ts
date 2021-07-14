@@ -3,7 +3,7 @@ import server from "./server";
 import dotenv from "dotenv";
 
 (async () => {
-  dotenv.config();
+  if (process.env.NODE_ENV === "development") dotenv.config();
 
   try {
     await server();
