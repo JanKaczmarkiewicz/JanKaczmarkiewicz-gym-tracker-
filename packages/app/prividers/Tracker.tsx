@@ -2,9 +2,9 @@ import produce from "immer";
 import React, { Context, FC, useContext } from "react";
 import { useState, useEffect, createContext } from "react";
 import { ActivityIndicator } from "react-native";
-import { Tracker } from "../../backend/router/tracker";
+import { TrackerResponse } from "../../backend/router/tracker";
 
-const adaptTracker = (tracker: Tracker) => ({
+const adaptTracker = (tracker: TrackerResponse) => ({
   ...tracker,
   workouts: tracker.workouts.map((workout) => ({
     ...workout,
@@ -20,7 +20,7 @@ const useTrackerValue = () => {
   useEffect(() => {
     fetch(`http://192.168.1.8:3000/tracker`)
       .then((res) => res.json())
-      .then((response: Tracker) => setTracker(adaptTracker(response)))
+      .then((response) => setTracker(adaptTracker(response)))
       .catch(console.error);
   }, []);
 
@@ -31,7 +31,10 @@ const useTrackerValue = () => {
     setTracker(updatedTracker);
 
     fetch(`http://192.168.1.8:3000/tracker`, {
-      method: "PATCH",
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(updatedTracker),
     });
   };
@@ -51,6 +54,30 @@ const useTrackerValue = () => {
       draft.workouts[workoutIndex].exercises[exerciseIndex].set[
         setIndex
       ].isCompleted = isCompleted;
+    });
+
+  const addExercise = ({
+    exercise,
+    workoutIndex,
+  }: {
+    exercise: AdaptedTracker["workouts"][number]["exercises"][number];
+    workoutIndex: number;
+  }) =>
+    updateTracker((draft) => {
+      draft.workouts[workoutIndex].exercises.push(exercise);
+    });
+
+  const updateExercise = ({
+    exercise,
+    exerciseIndex,
+    workoutIndex,
+  }: {
+    exercise: AdaptedTracker["workouts"][number]["exercises"][number];
+    workoutIndex: number;
+    exerciseIndex: number;
+  }) =>
+    updateTracker((draft) => {
+      draft.workouts[workoutIndex].exercises[exerciseIndex] = exercise;
     });
 
   const addWorkout = ({ date }: { date: Date }) =>
@@ -79,8 +106,10 @@ const useTrackerValue = () => {
 
   return {
     updateIsCompleted,
+    updateExercise,
     addWorkout,
     addSet,
+    addExercise,
     tracker: tracker!,
   };
 };

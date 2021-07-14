@@ -21,7 +21,7 @@ type Props = {
 const groupWorkoutsByMonth = (tracker: AdaptedTracker) => {
   const monthList: {
     name: string;
-    workouts: AdaptedTracker["workouts"];
+    workouts: (AdaptedTracker["workouts"][number] & { index: number })[];
   }[] = [
     { name: "December", workouts: [] },
     { name: "November", workouts: [] },
@@ -37,10 +37,10 @@ const groupWorkoutsByMonth = (tracker: AdaptedTracker) => {
     { name: "January", workouts: [] },
   ];
 
-  for (const workout of tracker.workouts) {
+  tracker.workouts.forEach((workout, index) => {
     const month = workout.date.getMonth();
-    monthList[month].workouts.push(workout);
-  }
+    monthList[monthList.length - month].workouts.push({ ...workout, index });
+  });
 
   return monthList;
 };
@@ -53,40 +53,40 @@ const MainView = ({ navigation }: Props) => {
   return (
     <Container>
       {monthList.map((month, monthIndex) => {
-        if (!month.workouts.length) return null;
-        //TODO: refactor this lines
-        const isTodayCreated = month.workouts.find(
+        const isCurrentMonth = monthIndex === TODAY.getMonth();
+        const isTodayCreated = !!month.workouts.find(
           ({ date }) => TODAY.getDate() === date.getDate()
         );
 
-        const isCurrentMonth = monthIndex === TODAY.getMonth();
+        const showAddDay = !isTodayCreated && isCurrentMonth;
+        const isMonthEmpty = !month.workouts.length;
 
-        const addDayButton =
-          !isTodayCreated && isCurrentMonth ? (
-            <AddDayButton
-              key="+"
-              onPress={() => {
-                addWorkout({ date: TODAY });
-                navigation.push("Workout", { workoutIndex: 0 });
-              }}
-            >
-              <AddDayButtonContentText>+</AddDayButtonContentText>
-            </AddDayButton>
-          ) : null;
+        if (isMonthEmpty && !showAddDay) return null;
+        const addDayButton = showAddDay ? (
+          <AddDayButton
+            key="+"
+            onPress={() => {
+              addWorkout({ date: TODAY });
+              navigation.push("Workout", { workoutIndex: 0 });
+            }}
+          >
+            <AddDayButtonContentText>+</AddDayButtonContentText>
+          </AddDayButton>
+        ) : null;
 
         return (
           <Fragment key={month.name}>
             <MonthTitle>{month.name}</MonthTitle>
             <DaysContainer>
               {addDayButton}
-              {month.workouts.map((workout, workoutIndex) => (
+              {month.workouts.map(({ date, index }) => (
                 <DayButton
-                  key={workout.date.getDate()}
-                  onPress={() => navigation.push("Workout", { workoutIndex })}
+                  key={date.getDate()}
+                  onPress={() => {
+                    navigation.push("Workout", { workoutIndex: index });
+                  }}
                 >
-                  <DayButtonContentText>
-                    {workout.date.getDate()}
-                  </DayButtonContentText>
+                  <DayButtonContentText>{date.getDate()}</DayButtonContentText>
                 </DayButton>
               ))}
             </DaysContainer>
