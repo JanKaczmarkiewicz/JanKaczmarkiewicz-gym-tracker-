@@ -9,7 +9,7 @@ export default () => {
 
   return new Promise((resolve, reject) =>
     app
-      .listen(process.env.SERVER_PORT)
+      .listen(Number.parseInt(process.env.SERVER_PORT || "3000"))
       .once("listening", resolve)
       .once("error", reject)
   );
