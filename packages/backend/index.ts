@@ -1,10 +1,21 @@
-import express from "express";
-import router from "./router";
+import connect from "./database/connect";
+import server from "./server";
+import dotenv from "dotenv";
 
-const app = express();
+(async () => {
+  dotenv.config();
 
-app.use(router);
+  try {
+    await server();
+    console.log("Server started.");
+  } catch (error) {
+    console.error("Something went wrong with server.", error);
+  }
 
-app.listen(3000, () => {
-  console.log(`Server has started`);
-});
+  try {
+    await connect();
+    console.log("DB is connected.");
+  } catch (error) {
+    console.error("Something went wrong with DB connection.", error);
+  }
+})();
