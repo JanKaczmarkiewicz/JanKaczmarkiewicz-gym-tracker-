@@ -8,7 +8,7 @@ export interface ITracker {
       set: {
         weight: number;
         repetitions: number;
-        isCompleted: true;
+        isCompleted: boolean;
       }[];
     }[];
   }[];
