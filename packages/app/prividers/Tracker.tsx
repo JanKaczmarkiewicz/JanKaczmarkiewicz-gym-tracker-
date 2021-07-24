@@ -3,6 +3,9 @@ import React, { Context, FC, useContext } from "react";
 import { useState, useEffect, createContext } from "react";
 import { ActivityIndicator } from "react-native";
 import { TrackerResponse } from "../../backend/router/tracker";
+import env from "../constants/env";
+
+const TRACKER_API_URL = `${env.API_URL}/tracker`;
 
 const adaptTracker = (tracker: TrackerResponse) => ({
   ...tracker,
@@ -18,10 +21,9 @@ const useTrackerValue = () => {
   const [tracker, setTracker] = useState<AdaptedTracker>();
 
   useEffect(() => {
-    fetch(`http://192.168.1.8:3000/tracker`)
+    fetch(TRACKER_API_URL)
       .then((res) => res.json())
-      .then((response) => setTracker(adaptTracker(response)))
-      .catch(console.error);
+      .then((response) => setTracker(adaptTracker(response)));
   }, []);
 
   const updateTracker = (recipe: (tracker: AdaptedTracker) => void) => {
@@ -30,7 +32,7 @@ const useTrackerValue = () => {
 
     setTracker(updatedTracker);
 
-    fetch(`http://192.168.1.8:3000/tracker`, {
+    fetch(TRACKER_API_URL, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
