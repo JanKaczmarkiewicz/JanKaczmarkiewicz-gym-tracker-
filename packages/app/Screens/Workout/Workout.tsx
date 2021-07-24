@@ -7,6 +7,7 @@ import colors from "../../colors";
 import { Bar as ProgressBar } from "react-native-progress";
 import { useTrackerContext } from "../../prividers/Tracker";
 import ExerciseModal from "./ExerciseModal";
+import ButtonWithBorder from "./BorderWithBorder";
 
 type Props = {
   route: RouteProp<RootStackParamList, "Workout">;
@@ -64,20 +65,6 @@ const ExerciseHeadingContainer = styled.View`
   justify-content: space-between;
   align-items: baseline;
   flex-direction: row;
-`;
-
-export const ButtonWithBorder = styled.TouchableOpacity`
-  border-radius: 20px;
-  background-color: ${colors.gray};
-  padding: 16px 0px;
-  border: 1px solid ${colors.white};
-  justify-content: center;
-  align-items: center;
-`;
-
-export const ButtonWithBorderText = styled.Text`
-  color: ${colors.white};
-  font-size: 20px;
 `;
 
 const Workout = ({
@@ -158,8 +145,12 @@ const Workout = ({
           </ExerciseContainer>
         );
       })}
-      <ButtonWithBorder onPress={() => setModalOpen("add")}>
-        <ButtonWithBorderText>Add an excersise</ButtonWithBorderText>
+
+      <ButtonWithBorder
+        color={colors.white}
+        onPress={() => setModalOpen("add")}
+      >
+        Add an excersise
       </ButtonWithBorder>
     </Container>
   );

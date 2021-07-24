@@ -6,7 +6,15 @@ import styled from "styled-components/native";
 import colors from "../../colors";
 import { AdaptedTracker } from "../../prividers/Tracker";
 import { MaterialIcons } from "@expo/vector-icons";
-import { ButtonWithBorder, ButtonWithBorderText } from "./Workout";
+import ButtonWithBorder from "./BorderWithBorder";
+
+const Spacer = styled.View`
+  width: 16px;
+`;
+
+const ColumnLayout = styled.View`
+  flex-direction: row;
+`;
 
 const ModalPaper = styled.View`
   margin-top: 64px;
@@ -173,9 +181,16 @@ const ExerciseModal = ({
               </AddSetButton>
             </SetTableRow>
           </SetTablePaper>
-          <ButtonWithBorder onPress={submitForm}>
-            <ButtonWithBorderText>Save</ButtonWithBorderText>
-          </ButtonWithBorder>
+
+          <ColumnLayout>
+            <ButtonWithBorder color={colors.red} onPress={submitForm}>
+              Delete
+            </ButtonWithBorder>
+            <Spacer />
+            <ButtonWithBorder color={colors.white} onPress={submitForm}>
+              Save
+            </ButtonWithBorder>
+          </ColumnLayout>
         </ModalPaper>
       </ModalOverlay>
     </Modal>
