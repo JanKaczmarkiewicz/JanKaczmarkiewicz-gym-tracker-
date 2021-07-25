@@ -12,13 +12,13 @@ App to track personal fitness trainings
 
 ## App design
 
-[figma project](#https://www.figma.com/file/zPxEroQvg8DmZcUL6bCeqg/Untitled?node-id=0%3A1)
+[figma project](https://www.figma.com/file/zPxEroQvg8DmZcUL6bCeqg/Untitled?node-id=0%3A1)
 
 ## How to debug?
 
-> in case of any problems see [docs](#https://docs.expo.io/workflow/debugging/#react-native-debugger)
+> in case of any problems see [docs](https://docs.expo.io/workflow/debugging/#react-native-debugger)
 
 - open `React Native Debugger`, `cmd + t`, set port `19000`
-- run app in dev mode (see [How to develop?](#foo))
+- run app in dev mode (see [How to develop?](#app-design))
 - in device emulator `cmd + m`, `allow remote js debugging`
 - refresh app
