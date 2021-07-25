@@ -10,6 +10,10 @@ App to track personal fitness trainings
 - run `app:develop` & `backend:develop` scripts
 - in `http://localhost:19002/` select Run on Android device/emulator
 
+## App design
+
+[figma project](#https://www.figma.com/file/zPxEroQvg8DmZcUL6bCeqg/Untitled?node-id=0%3A1)
+
 ## How to debug?
 
 > in case of any problems see [docs](#https://docs.expo.io/workflow/debugging/#react-native-debugger)
