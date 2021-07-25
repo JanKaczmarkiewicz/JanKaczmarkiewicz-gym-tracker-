@@ -69,6 +69,17 @@ const useTrackerValue = () => {
       draft.workouts[workoutIndex].exercises.push(exercise);
     });
 
+  const deleteExercise = ({
+    workoutIndex,
+    exerciseIndex,
+  }: {
+    exerciseIndex: number;
+    workoutIndex: number;
+  }) =>
+    updateTracker((draft) => {
+      draft.workouts[workoutIndex].exercises.splice(exerciseIndex, 1);
+    });
+
   const updateExercise = ({
     exercise,
     exerciseIndex,
@@ -112,6 +123,7 @@ const useTrackerValue = () => {
     addWorkout,
     addSet,
     addExercise,
+    deleteExercise,
     tracker: tracker!,
   };
 };

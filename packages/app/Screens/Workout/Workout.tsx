@@ -5,7 +5,7 @@ import { Container } from "../MainView/styled";
 import styled from "styled-components/native";
 import colors from "../../colors";
 import { Bar as ProgressBar } from "react-native-progress";
-import { useTrackerContext } from "../../prividers/Tracker";
+import { useTrackerContext } from "../../providers/Tracker";
 import ExerciseModal from "./ExerciseModal";
 import ButtonWithBorder from "./BorderWithBorder";
 
@@ -72,25 +72,35 @@ const Workout = ({
     params: { workoutIndex },
   },
 }: Props) => {
-  const { tracker, updateIsCompleted, addExercise, updateExercise } =
-    useTrackerContext();
+  const {
+    tracker,
+    updateIsCompleted,
+    addExercise,
+    updateExercise,
+    deleteExercise,
+  } = useTrackerContext();
   const [modalOpen, setModalOpen] = useState<"add" | number | undefined>();
   const workout = tracker.workouts[workoutIndex];
 
   const isAddModalOpen = modalOpen === "add";
-  const editedExersise = typeof modalOpen === "number" ? modalOpen : -1;
-  const isEditModalOpen = editedExersise > -1;
+  const editedExercise = typeof modalOpen === "number" ? modalOpen : -1;
+  const isEditModalOpen = editedExercise > -1;
 
   return (
     <Container>
       {isEditModalOpen && (
         <ExerciseModal
-          initialValue={workout.exercises[editedExersise]}
+          rejectText="Delete"
+          submitText="Save"
+          initialValue={workout.exercises[editedExercise]}
+          onReject={() =>
+            deleteExercise({ workoutIndex, exerciseIndex: editedExercise })
+          }
           onSubmit={(exercise) =>
             updateExercise({
               exercise,
               workoutIndex,
-              exerciseIndex: editedExersise,
+              exerciseIndex: editedExercise,
             })
           }
           onClose={() => setModalOpen(undefined)}
@@ -99,8 +109,11 @@ const Workout = ({
 
       {isAddModalOpen && (
         <ExerciseModal
+          rejectText="Undo"
+          submitText="Create"
           initialValue={{ name: "", set: [] }}
           onSubmit={(exercise) => addExercise({ exercise, workoutIndex })}
+          onReject={() => {}}
           onClose={() => setModalOpen(undefined)}
         />
       )}
@@ -152,7 +165,7 @@ const Workout = ({
         color={colors.white}
         onPress={() => setModalOpen("add")}
       >
-        Add an excersise
+        Add an exercise
       </ButtonWithBorder>
     </Container>
   );

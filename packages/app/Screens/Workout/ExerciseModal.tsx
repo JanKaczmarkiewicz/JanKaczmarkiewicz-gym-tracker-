@@ -4,7 +4,7 @@ import ModalSelector from "react-native-modal-selector";
 import { Modal } from "react-native";
 import styled from "styled-components/native";
 import colors from "../../colors";
-import { AdaptedTracker } from "../../prividers/Tracker";
+import { AdaptedTracker } from "../../providers/Tracker";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonWithBorder from "./BorderWithBorder";
 
@@ -107,10 +107,16 @@ const ExerciseModal = ({
   onClose,
   onSubmit,
   initialValue,
+  onReject,
+  submitText,
+  rejectText,
 }: {
   onClose: () => void;
   onSubmit: (set: Set) => void;
   initialValue: Set;
+  onReject: () => void;
+  submitText: string;
+  rejectText: string;
 }) => {
   const { control, handleSubmit } = useForm({
     defaultValues: initialValue,
@@ -132,12 +138,17 @@ const ExerciseModal = ({
     onClose();
   };
 
+  const reject = () => {
+    onReject();
+    onClose();
+  };
+
   const data = [
     { key: 1, label: "Bench Press" },
     { key: 2, label: "Squats" },
   ];
 
-  const onExcersiseChange = ({ label }: typeof data[number]) =>
+  const onExerciseChange = ({ label }: typeof data[number]) =>
     field.onChange({ target: { value: label, name: "name" } });
 
   return (
@@ -147,12 +158,10 @@ const ExerciseModal = ({
           <ModalSelector
             data={data}
             renderItem={null}
-            onChange={onExcersiseChange}
+            onChange={onExerciseChange}
           >
             <DropdownInput>
-              <DropdownInputText>
-                {field.value || "Excersise"}
-              </DropdownInputText>
+              <DropdownInputText>{field.value || "Exercise"}</DropdownInputText>
               <MaterialIcons
                 name="keyboard-arrow-down"
                 size={24}
@@ -183,12 +192,12 @@ const ExerciseModal = ({
           </SetTablePaper>
 
           <ColumnLayout>
-            <ButtonWithBorder color={colors.red} onPress={submitForm}>
-              Delete
+            <ButtonWithBorder color={colors.red} onPress={reject}>
+              {rejectText}
             </ButtonWithBorder>
             <Spacer />
             <ButtonWithBorder color={colors.white} onPress={submitForm}>
-              Save
+              {submitText}
             </ButtonWithBorder>
           </ColumnLayout>
         </ModalPaper>
