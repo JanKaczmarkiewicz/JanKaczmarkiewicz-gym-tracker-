@@ -5,8 +5,8 @@ import { Container } from "../MainView/styled";
 import colors from "../../../colors";
 import { Bar as ProgressBar } from "react-native-progress";
 import { useTrackerContext } from "../../../providers/Tracker";
-import ExerciseModal from "./ExerciseModal";
-import ButtonWithBorder from "./BorderWithBorder";
+import ExerciseModal from "../../ExerciseModal/ExerciseModal";
+import ButtonWithBorder from "../../ButtonWithBorder/BorderWithBorder";
 import {
   EditButton,
   EditButtonText,
