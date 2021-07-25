@@ -8,3 +8,6 @@ export const DAY_BUTTON_SIZE =
     2 * HORIZONTAL_CONTAINER_PADDING -
     (NUMBER_OF_COLUMNS - 1) * GUTTER_SIZE) /
   NUMBER_OF_COLUMNS;
+
+export const TODAY = new Date();
+export const ADD_DAY_OPTION = { date: TODAY, type: "NEW_DAY" } as const;

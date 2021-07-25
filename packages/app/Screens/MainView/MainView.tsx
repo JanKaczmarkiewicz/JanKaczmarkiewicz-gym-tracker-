@@ -10,43 +10,13 @@ import {
   DayButton,
   DayButtonContentText,
 } from "./styled";
-import { AdaptedTracker, useTrackerContext } from "../../prividers/Tracker";
+import { useTrackerContext } from "../../providers/Tracker";
 import { FlatList, ListRenderItem } from "react-native";
-import { NUMBER_OF_COLUMNS } from "./constants";
-
-const TODAY = new Date();
-
-const ADD_DAY_OPTION = { date: TODAY, type: "NEW_DAY" } as const;
+import { ADD_DAY_OPTION, NUMBER_OF_COLUMNS, TODAY } from "./constants";
+import { groupWorkoutsByMonth } from "./helpers";
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Home">;
-};
-
-const groupWorkoutsByMonth = (tracker: AdaptedTracker) => {
-  const monthList: {
-    name: string;
-    workouts: (AdaptedTracker["workouts"][number] & { index: number })[];
-  }[] = [
-    { name: "December", workouts: [] },
-    { name: "November", workouts: [] },
-    { name: "October", workouts: [] },
-    { name: "September", workouts: [] },
-    { name: "August", workouts: [] },
-    { name: "July", workouts: [] },
-    { name: "June", workouts: [] },
-    { name: "May", workouts: [] },
-    { name: "April", workouts: [] },
-    { name: "March", workouts: [] },
-    { name: "February", workouts: [] },
-    { name: "January", workouts: [] },
-  ];
-
-  tracker.workouts.forEach((workout, index) => {
-    const month = workout.date.getMonth();
-    monthList[monthList.length - month].workouts.push({ ...workout, index });
-  });
-
-  return monthList;
 };
 
 const MainView = ({ navigation }: Props) => {
