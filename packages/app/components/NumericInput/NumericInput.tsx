@@ -1,3 +1,4 @@
+import React from "react";
 import { useController } from "react-hook-form";
 import styled from "styled-components/native";
 import colors from "../../colors";
@@ -17,7 +18,7 @@ const NumericInput = ({ control, name }: { name: string; control: any }) => {
   return (
     <Input
       keyboardType="number-pad"
-      textAlign={"center"}
+      textAlign="center"
       value={field.value.toString()}
       onChangeText={field.onChange}
     />
