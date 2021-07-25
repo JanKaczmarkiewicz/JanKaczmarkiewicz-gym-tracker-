@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MainView from "./screens/MainView/MainView";
 import Workout from "./screens/Workout/Workout";
-import { TrackerProvider } from "./prividers/Tracker";
+import { TrackerProvider } from "./providers/Tracker";
 
 export type RootStackParamList = {
   Home: undefined;
