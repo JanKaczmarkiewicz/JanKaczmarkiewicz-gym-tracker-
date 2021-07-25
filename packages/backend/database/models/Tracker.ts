@@ -4,7 +4,7 @@ export interface ITracker {
   workouts: {
     date: Date;
     exercises: {
-      name: string;
+      type: ExerciseKind;
       set: {
         weight: number;
         repetitions: number;
@@ -12,6 +12,13 @@ export interface ITracker {
       }[];
     }[];
   }[];
+}
+
+export enum ExerciseKind {
+  SQUATS = "SQUATS",
+  BENCH_PRESS = "BENCH_PRESS",
+  DEADLIFT = "DEADLIFT",
+  OVERHEAD_PRESS = "OVERHEAD_PRESS",
 }
 
 const setSchema = new mongoose.Schema(
@@ -25,7 +32,7 @@ const setSchema = new mongoose.Schema(
 
 const exerciseSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
+    type: { type: String, required: true, enum: Object.values(ExerciseKind) },
     set: [setSchema],
   },
   { _id: false }

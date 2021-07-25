@@ -18,6 +18,8 @@ import {
   SetText,
   SetWrapper,
 } from "./styled";
+import { getUnusedExercises } from "./helpers";
+import { EXERCISE_LABELS } from "../../../constants";
 
 type Props = {
   route: RouteProp<RootStackParamList, "Workout">;
@@ -42,10 +44,19 @@ const Workout = ({
   const editedExercise = typeof modalOpen === "number" ? modalOpen : -1;
   const isEditModalOpen = editedExercise > -1;
 
+  const closeModal = () => setModalOpen(undefined);
+  const openAddModal = () => setModalOpen("add");
+
+  const unusedExercises = getUnusedExercises(workout.exercises);
+
   return (
     <Container>
       {isEditModalOpen && (
         <ExerciseModal
+          allowedExercises={[
+            workout.exercises[editedExercise].type,
+            ...unusedExercises,
+          ]}
           rejectText="Delete"
           submitText="Save"
           initialValue={workout.exercises[editedExercise]}
@@ -59,29 +70,30 @@ const Workout = ({
               exerciseIndex: editedExercise,
             })
           }
-          onClose={() => setModalOpen(undefined)}
+          onClose={closeModal}
         />
       )}
 
       {isAddModalOpen && (
         <ExerciseModal
+          allowedExercises={unusedExercises}
           rejectText="Cancel"
           submitText="Create"
-          initialValue={{ name: "", set: [] }}
+          initialValue={{ type: unusedExercises[0], set: [] }}
           onSubmit={(exercise) => addExercise({ exercise, workoutIndex })}
           onReject={() => {}}
-          onClose={() => setModalOpen(undefined)}
+          onClose={closeModal}
         />
       )}
 
-      {workout.exercises.map(({ set, name }, exerciseIndex) => {
+      {workout.exercises.map(({ set, type }, exerciseIndex) => {
         const progress =
           set.filter(({ isCompleted }) => isCompleted).length / set.length;
 
         return (
-          <ExerciseContainer isCompleted={progress === 1}>
+          <ExerciseContainer key={type} isCompleted={progress === 1}>
             <ExerciseHeadingContainer>
-              <ExerciseTitle>{name}</ExerciseTitle>
+              <ExerciseTitle>{EXERCISE_LABELS[type]}</ExerciseTitle>
               <EditButton onPress={() => setModalOpen(exerciseIndex)}>
                 <EditButtonText>edit</EditButtonText>
               </EditButton>
@@ -98,6 +110,7 @@ const Workout = ({
             <SetsContainer>
               {set.map(({ isCompleted, repetitions, weight }, setIndex) => (
                 <SetWrapper
+                  key={setIndex}
                   onPress={() => {
                     updateIsCompleted({
                       setIndex,
@@ -118,8 +131,9 @@ const Workout = ({
       })}
 
       <ButtonWithBorder
+        disabled={unusedExercises.length === 0}
         color={colors.white}
-        onPress={() => setModalOpen("add")}
+        onPress={openAddModal}
       >
         Add an exercise
       </ButtonWithBorder>

@@ -18,6 +18,8 @@ import {
 } from "./styled";
 import Dropdown from "../Dropdown/Dropdown";
 import NumericInput from "../NumericInput/NumericInput";
+import { ExerciseKind } from "../../../backend/database/models/Tracker";
+import { EXERCISE_LABELS } from "../../constants";
 
 type Set = AdaptedTracker["workouts"][number]["exercises"][number];
 
@@ -28,6 +30,7 @@ type ExerciseModalProps = {
   onReject: () => void;
   submitText: string;
   rejectText: string;
+  allowedExercises: ExerciseKind[];
 };
 
 const ExerciseModal = ({
@@ -37,6 +40,7 @@ const ExerciseModal = ({
   onReject,
   submitText,
   rejectText,
+  allowedExercises,
 }: ExerciseModalProps) => {
   const { control, handleSubmit } = useForm({
     defaultValues: initialValue,
@@ -46,7 +50,7 @@ const ExerciseModal = ({
     append,
     remove,
   } = useFieldArray({ name: "set", control });
-  const { field } = useController({ name: "name", control });
+  const { field } = useController({ name: "type", control });
 
   const onAddSetButtonClick = () => {
     const { weight: lastWeight } = sets[sets.length - 1] || { weight: 0 };
@@ -63,13 +67,13 @@ const ExerciseModal = ({
     onClose();
   };
 
-  const options = [
-    { key: "1", label: "Bench Press" },
-    { key: "2", label: "Squats" },
-  ];
+  const options = allowedExercises.map((exercise) => ({
+    key: exercise,
+    label: EXERCISE_LABELS[exercise],
+  }));
 
-  const onExerciseChange = ({ label }: typeof options[number]) =>
-    field.onChange({ target: { value: label, name: "name" } });
+  const onExerciseChange = ({ key }: typeof options[number]) =>
+    field.onChange({ target: { value: key, name: "type" } });
 
   return (
     <Modal transparent={true} visible onRequestClose={onClose}>
