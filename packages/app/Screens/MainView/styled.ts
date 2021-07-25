@@ -1,10 +1,15 @@
 import styled from "styled-components/native";
 import colors from "../../colors";
+import {
+  DAY_BUTTON_SIZE,
+  GUTTER_SIZE,
+  HORIZONTAL_CONTAINER_PADDING,
+} from "./constants";
 
 export const Container = styled.ScrollView`
   flex: 1;
   background-color: ${colors.black};
-  padding: 32px 12px;
+  padding: 32px ${HORIZONTAL_CONTAINER_PADDING}px;
 `;
 
 export const MonthTitle = styled.Text`
@@ -13,14 +18,14 @@ export const MonthTitle = styled.Text`
 `;
 
 export const DayButton = styled.TouchableOpacity`
-  width: 80px;
-  height: 80px;
+  width: ${DAY_BUTTON_SIZE}px;
+  height: ${DAY_BUTTON_SIZE}px;
   justify-content: center;
   align-items: center;
   background-color: ${colors.darkGray};
   border-radius: 20px;
-  margin-right: 16px;
-  margin-bottom: 16px;
+  margin-right: ${GUTTER_SIZE}px;
+  margin-bottom: ${GUTTER_SIZE}px;
 `;
 
 export const AddDayButton = styled(DayButton)`
@@ -29,9 +34,6 @@ export const AddDayButton = styled(DayButton)`
 
 export const DaysContainer = styled.View`
   padding: 16px 0;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
 `;
 
 export const DayButtonContentText = styled.Text`

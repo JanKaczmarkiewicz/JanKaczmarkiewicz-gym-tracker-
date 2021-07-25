@@ -117,13 +117,15 @@ const Workout = ({
                 <EditButtonText>edit</EditButtonText>
               </EditButton>
             </ExerciseHeadingContainer>
-            <ProgressBarWrapper>
-              <ProgressBar
-                progress={progress}
-                width={350}
-                color={colors.lightGreen}
-              />
-            </ProgressBarWrapper>
+            {set.length > 0 && (
+              <ProgressBarWrapper>
+                <ProgressBar
+                  progress={progress}
+                  width={350}
+                  color={colors.lightGreen}
+                />
+              </ProgressBarWrapper>
+            )}
             <SetsContainer>
               {set.map(({ isCompleted, repetitions, weight }, setIndex) => (
                 <SetWrapper
