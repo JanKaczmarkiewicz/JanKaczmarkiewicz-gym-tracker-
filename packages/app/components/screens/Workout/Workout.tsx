@@ -65,7 +65,7 @@ const Workout = ({
 
       {isAddModalOpen && (
         <ExerciseModal
-          rejectText="Undo"
+          rejectText="Cancel"
           submitText="Create"
           initialValue={{ name: "", set: [] }}
           onSubmit={(exercise) => addExercise({ exercise, workoutIndex })}
