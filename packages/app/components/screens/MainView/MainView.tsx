@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { RootStackParamList } from "../../App";
+import { RootStackParamList } from "../../../App";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Container,
@@ -10,7 +10,7 @@ import {
   DayButton,
   DayButtonContentText,
 } from "./styled";
-import { useTrackerContext } from "../../providers/Tracker";
+import { useTrackerContext } from "../../../providers/Tracker";
 import { FlatList, ListRenderItem } from "react-native";
 import { ADD_DAY_OPTION, NUMBER_OF_COLUMNS, TODAY } from "./constants";
 import { groupWorkoutsByMonth } from "./helpers";

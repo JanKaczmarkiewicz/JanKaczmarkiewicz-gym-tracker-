@@ -3,8 +3,8 @@ import { useController, useFieldArray, useForm } from "react-hook-form";
 import ModalSelector from "react-native-modal-selector";
 import { Modal } from "react-native";
 import styled from "styled-components/native";
-import colors from "../../colors";
-import { AdaptedTracker } from "../../providers/Tracker";
+import colors from "../../../colors";
+import { AdaptedTracker } from "../../../providers/Tracker";
 import { MaterialIcons } from "@expo/vector-icons";
 import ButtonWithBorder from "./BorderWithBorder";
 

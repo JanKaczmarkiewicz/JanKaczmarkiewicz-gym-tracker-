@@ -1,4 +1,4 @@
-import { AdaptedTracker } from "../../providers/Tracker";
+import { AdaptedTracker } from "../../../providers/Tracker";
 
 export const groupWorkoutsByMonth = (tracker: AdaptedTracker) => {
   const monthList: {

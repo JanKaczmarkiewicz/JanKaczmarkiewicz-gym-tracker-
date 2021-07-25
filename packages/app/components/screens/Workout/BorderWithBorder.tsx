@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { ButtonProps } from "react-native";
 import styled from "styled-components/native";
-import colors from "../../colors";
+import colors from "../../../colors";
 
 type StylesProps = { color: string };
 

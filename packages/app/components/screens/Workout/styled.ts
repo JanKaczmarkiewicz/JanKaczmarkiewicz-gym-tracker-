@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import colors from "../../colors";
+import colors from "../../../colors";
 
 export const SetText = styled.Text<{ isCompleted: boolean }>`
   color: ${({ isCompleted }) =>

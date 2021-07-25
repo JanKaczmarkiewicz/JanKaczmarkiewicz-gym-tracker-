@@ -1,8 +1,8 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import MainView from "./screens/MainView/MainView";
-import Workout from "./screens/Workout/Workout";
+import MainView from "./components/screens/MainView/MainView";
+import Workout from "./components/screens/Workout/Workout";
 import { TrackerProvider } from "./providers/Tracker";
 
 export type RootStackParamList = {

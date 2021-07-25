@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import colors from "../../colors";
+import colors from "../../../colors";
 import {
   DAY_BUTTON_SIZE,
   GUTTER_SIZE,

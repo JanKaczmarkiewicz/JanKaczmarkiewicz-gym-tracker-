@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "../../App";
+import { RootStackParamList } from "../../../App";
 import { Container } from "../MainView/styled";
-import colors from "../../colors";
+import colors from "../../../colors";
 import { Bar as ProgressBar } from "react-native-progress";
-import { useTrackerContext } from "../../providers/Tracker";
+import { useTrackerContext } from "../../../providers/Tracker";
 import ExerciseModal from "./ExerciseModal";
 import ButtonWithBorder from "./BorderWithBorder";
 import {
