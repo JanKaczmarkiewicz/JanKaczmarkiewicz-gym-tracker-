@@ -2,70 +2,26 @@ import React, { useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../App";
 import { Container } from "../MainView/styled";
-import styled from "styled-components/native";
 import colors from "../../colors";
 import { Bar as ProgressBar } from "react-native-progress";
 import { useTrackerContext } from "../../providers/Tracker";
 import ExerciseModal from "./ExerciseModal";
 import ButtonWithBorder from "./BorderWithBorder";
+import {
+  EditButton,
+  EditButtonText,
+  ExerciseContainer,
+  ExerciseHeadingContainer,
+  ExerciseTitle,
+  ProgressBarWrapper,
+  SetsContainer,
+  SetText,
+  SetWrapper,
+} from "./styled";
 
 type Props = {
   route: RouteProp<RootStackParamList, "Workout">;
 };
-
-const SetText = styled.Text<{ isCompleted: boolean }>`
-  color: ${({ isCompleted }) =>
-    isCompleted ? colors.lightGreen : colors.white};
-  font-size: 24px;
-`;
-
-const SetWrapper = styled.TouchableOpacity`
-  margin-bottom: 24px;
-  margin-right: 24px;
-`;
-
-const ExerciseContainer = styled.View<{ isCompleted: boolean }>`
-  background-color: ${colors.darkGray};
-  padding: 16px;
-  font-size: 20px;
-  margin-bottom: 32px;
-  border-radius: 20px;
-  border: 1px solid
-    ${({ isCompleted }) => (isCompleted ? colors.lightGreen : "transparent")};
-`;
-
-const SetsContainer = styled.View`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-`;
-
-const ExerciseTitle = styled.Text`
-  font-size: 36px;
-  color: ${colors.white};
-  margin-bottom: 24px;
-`;
-
-const ProgressBarWrapper = styled.View`
-  margin-bottom: 24px;
-`;
-
-const EditButton = styled.TouchableOpacity`
-  border-radius: 20px;
-  padding: 12px 24px;
-  background-color: ${colors.gray};
-`;
-
-const EditButtonText = styled.Text`
-  color: ${colors.white};
-  font-size: 20px;
-`;
-
-const ExerciseHeadingContainer = styled.View`
-  justify-content: space-between;
-  align-items: baseline;
-  flex-direction: row;
-`;
 
 const Workout = ({
   route: {
