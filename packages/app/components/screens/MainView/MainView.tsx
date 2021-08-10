@@ -54,7 +54,9 @@ const MainView = ({ navigation }: Props) => {
 
   return (
     <Container>
-      {monthList.map((month, monthIndex) => {
+      {monthList.map((month, index) => {
+        const monthIndex = monthList.length - index;
+
         const isCurrentMonth = monthIndex === TODAY.getMonth();
         const isTodayCreated = !!month.workouts.find(
           ({ date }) => TODAY.getDate() === date.getDate()
