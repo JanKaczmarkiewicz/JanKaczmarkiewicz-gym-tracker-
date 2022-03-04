@@ -21,6 +21,7 @@ export enum ExerciseKind {
   OVERHEAD_PRESS = "OVERHEAD_PRESS",
 }
 
+
 const setSchema = new mongoose.Schema(
   {
     weight: { type: Number, required: true },
