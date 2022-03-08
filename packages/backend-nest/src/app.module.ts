@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { TrackerModule } from './tracker/tracker.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { Tracker } from './tracker/entities/tracker.entity';
+import { TrackerModule } from './tracker/tracker.module';
 
 @Module({
   imports: [
