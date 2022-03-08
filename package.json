@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "@nestjs/mapped-types": "*"
-  },
   "name": "app",
   "private": true,
   "workspaces": [
@@ -10,7 +7,7 @@
   "scripts": {
     "app:develop": "cd packages/app/ && npm start",
     "backend:develop": "cd packages/backend/ && npm develop",
-    "backend:nest:develop": "cd packages/backend-nest/ && npm run start:dev",
+    "backend-nest:develop": "cd packages/backend-nest/ && npm run start:dev",
     "app:release": "cd packages/app/ && expo build:android --release-channel staging"
   }
 }
