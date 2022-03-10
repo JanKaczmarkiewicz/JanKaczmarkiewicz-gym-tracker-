@@ -1,1 +1,1 @@
-web: yarn workspace @gym-tracker/backend start
+web: npm -w packages/backend start
