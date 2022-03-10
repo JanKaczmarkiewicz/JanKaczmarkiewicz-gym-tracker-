@@ -124,6 +124,7 @@ const useTrackerValue = () => {
     addSet,
     addExercise,
     deleteExercise,
+    // SAFETY: we check in provider if tracker in empty
     tracker: tracker!,
   };
 };
